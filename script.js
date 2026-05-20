@@ -3,7 +3,7 @@
 // =====================================================
 
 /* ─── CONFIG ──────────────────────────────────────── */
-const WHATSAPP_NUMBER = '573122646620';
+const WHATSAPP_NUMBER = '573122676620';
 const WHATSAPP_MSG    = encodeURIComponent(
   '¡Hola! Vi tu página Pajara Pinta y me encantó. ¿Me puedes dar más información? 🎨'
 );

@@ -68,12 +68,13 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   flex-shrink: 0;
 }
 .nav-logo-img {
-  height: 38px;
+  height: 48px; /* Aumentado de 38px a 48px para ser más grande */
   width: auto;
   max-width: 160px;
   object-fit: contain;
   display: block;
   filter: brightness(1);
+  border-radius: 50%;
   transition: filter 0.3s, transform 0.3s;
 }
 .nav-logo:hover .nav-logo-img {
