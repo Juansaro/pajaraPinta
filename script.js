@@ -223,7 +223,9 @@ function initCatalog() {
     // Mostrar panel con animación
     prodPanel.classList.add('open');
     requestAnimationFrame(() => {
-      prodPanel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      const offset = window.innerWidth < 768 ? 80 : 120;
+      const topPos = prodPanel.getBoundingClientRect().top + window.scrollY - offset;
+      window.scrollTo({ top: topPos, behavior: 'smooth' });
     });
   }
 
@@ -231,7 +233,8 @@ function initCatalog() {
   closeBtn?.addEventListener('click', () => {
     prodPanel.classList.remove('open');
     $$('.cat-tab').forEach(t => t.classList.remove('active'));
-    catGrid.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    const catalogTop = $('#catalog').getBoundingClientRect().top + window.scrollY - 80;
+    window.scrollTo({ top: catalogTop, behavior: 'smooth' });
   });
 }
 
