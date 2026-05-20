@@ -601,6 +601,259 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   to { opacity: 1; transform: translateY(0); }
 }
 
+/* ─── PRODUCT MODAL ──────────────────────────────── */
+.product-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  padding: 1rem;
+}
+.product-modal.open {
+  pointer-events: auto;
+}
+
+.modal-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.4);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+.product-modal.open .modal-overlay {
+  opacity: 1;
+}
+
+.modal-content {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 1150px; /* Ampliado para mejor vista */
+  background: rgba(30, 27, 46, 0.75);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(139, 92, 246, 0.4);
+  border-radius: 24px;
+  box-shadow: 0 0 0 0 var(--violet-glow);
+  opacity: 0;
+  transform: scale(0.95) translateY(20px);
+  transition: all 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  overflow: hidden;
+}
+
+/* Granulated noise effect */
+.modal-content::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: -1;
+}
+
+.product-modal.open .modal-content {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.8), 0 0 40px var(--violet-glow);
+  transition-delay: 0.1s;
+}
+
+.modal-close {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  z-index: 10;
+  color: var(--white);
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s;
+  opacity: 0;
+  transform: rotate(-90deg);
+}
+.product-modal.open .modal-close {
+  opacity: 1;
+  transform: rotate(0deg);
+  transition-delay: 0.4s;
+}
+.modal-close:hover {
+  background: var(--violet);
+  border-color: var(--violet);
+  box-shadow: 0 0 15px var(--violet-glow);
+  transform: rotate(90deg) scale(1.1);
+}
+
+.modal-body {
+  display: flex;
+  flex-direction: column;
+}
+@media (min-width: 768px) {
+  .modal-body {
+    flex-direction: row;
+    height: 75vh;
+    max-height: 700px; /* Ampliado */
+  }
+}
+
+.modal-img-wrap {
+  width: 100%;
+  height: 300px;
+  overflow: hidden; /* Ocultamos overflow para que el pan nativo sea con drag JS */
+  position: relative;
+  background: var(--black-soft);
+}
+
+@media (min-width: 768px) {
+  .modal-img-wrap {
+    width: 55%;
+    height: 100%;
+  }
+}
+
+.modal-zoom-controls {
+  position: absolute;
+  bottom: 1.5rem;
+  left: 1.5rem;
+  display: flex;
+  gap: 0.6rem;
+  z-index: 10;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: all 0.5s;
+}
+
+.product-modal.open .modal-zoom-controls {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.5s;
+}
+
+.modal-zoom-controls button {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: rgba(15, 23, 42, 0.75);
+  border: 1px solid rgba(139, 92, 246, 0.4);
+  color: var(--white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  transition: all 0.3s;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+.modal-zoom-controls button:hover {
+  background: var(--violet);
+  border-color: var(--violet);
+  transform: scale(1.1);
+  box-shadow: 0 4px 15px var(--violet-glow);
+}
+
+.modal-img {
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: contain; /* Para que la imagen se vea completa antes del zoom */
+  opacity: 0;
+  transform: scale(1.05);
+  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  transform-origin: center center;
+  pointer-events: none; /* Los clicks pasan al wrap para el arrastre */
+}
+.product-modal.open .modal-img {
+  opacity: 1;
+  /* El transform es manejado dinámicamente por JS al abrir (scale(1)) */
+  transition-delay: 0.2s;
+}
+
+.modal-text {
+  padding: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+}
+@media (min-width: 768px) {
+  .modal-text {
+    width: 45%; /* Complemento al 55% de la imagen */
+    padding: 3.5rem;
+  }
+}
+
+.modal-text h3, .modal-text p, .modal-text a {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.product-modal.open .modal-text h3 {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.35s;
+}
+.product-modal.open .modal-text p {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.45s;
+}
+.product-modal.open .modal-text a {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: 0.55s;
+}
+
+#modal-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.8rem, 3vw, 2.4rem);
+  color: var(--white);
+  margin-bottom: 0.8rem;
+}
+#modal-desc {
+  font-size: 1.05rem;
+  color: rgba(255, 255, 255, 0.75);
+  line-height: 1.6;
+  margin-bottom: 2.5rem;
+}
+
+/* Animaciones de cierre */
+.product-modal.closing .modal-text h3,
+.product-modal.closing .modal-text p,
+.product-modal.closing .modal-text a,
+.product-modal.closing .modal-close {
+  opacity: 0;
+  transform: translateY(-15px);
+  transition-delay: 0s;
+  transition-duration: 0.3s;
+}
+.product-modal.closing .modal-img {
+  opacity: 0;
+  transform: scale(1.05);
+  transition-delay: 0.1s;
+  transition-duration: 0.4s;
+}
+.product-modal.closing .modal-content {
+  opacity: 0;
+  transform: scale(0.95) translateY(20px);
+  transition-delay: 0.2s;
+  transition-duration: 0.4s;
+}
+.product-modal.closing .modal-overlay {
+  opacity: 0;
+  transition-delay: 0.4s;
+  transition-duration: 0.3s;
+}
+
 /* ─── SECTION 3 · CONTACT ────────────────────────── */
 #contact {
   background: var(--off-white);
