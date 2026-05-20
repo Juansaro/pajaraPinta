@@ -16,9 +16,9 @@
   <title>Pajara Pinta — Arte que vives</title>
 
   <!-- Preload critical images -->
-  <link rel="preload" as="image" href="images/hero_1.png" />
-  <link rel="preload" as="image" href="images/hero_2.png" />
-  <link rel="preload" as="image" href="images/hero_3.png" />
+  <link rel="preload" as="image" href="images_migration/principal/img_principal_ceramica.jpeg" />
+  <link rel="preload" as="image" href="images_migration/principal/img_principal_matera.jpeg" />
+  <link rel="preload" as="image" href="images_migration/principal/img_principal_ropa.jpeg" />
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -32,7 +32,9 @@
        NAVBAR
   ═══════════════════════════════════════════════ -->
   <nav id="navbar" aria-label="Navegación principal">
-    <a href="#hero" class="nav-logo">Pajara<span>.</span>Pinta</a>
+    <a href="#hero" class="nav-logo" aria-label="Pajara Pinta - Inicio">
+      <img src="images_migration/branding/logo_principal.png" alt="Pajara Pinta" class="nav-logo-img" />
+    </a>
     <ul class="nav-links" role="list">
       <li><a href="#hero">Inicio</a></li>
       <li><a href="#catalog">Catálogo</a></li>
@@ -102,10 +104,9 @@
 
     <!-- Tabs -->
     <div class="category-tabs reveal" role="tablist" aria-label="Categorías de productos">
-      <button class="cat-tab" data-cat="ropa"       role="tab" aria-controls="products-panel">Ropa Artística</button>
-      <button class="cat-tab" data-cat="materas"    role="tab" aria-controls="products-panel">Materas</button>
-      <button class="cat-tab" data-cat="sets"       role="tab" aria-controls="products-panel">Sets</button>
-      <button class="cat-tab" data-cat="accesorios" role="tab" aria-controls="products-panel">Accesorios</button>
+      <button class="cat-tab" data-cat="ceramica" role="tab" aria-controls="products-panel">Cerámica</button>
+      <button class="cat-tab" data-cat="materas"  role="tab" aria-controls="products-panel">Materas</button>
+      <button class="cat-tab" data-cat="ropa"     role="tab" aria-controls="products-panel">Ropa</button>
     </div>
 
     <!-- Category Cards (populated by JS) -->

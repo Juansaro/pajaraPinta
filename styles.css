@@ -63,13 +63,23 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   border-bottom: 1px solid rgba(139,92,246,0.25);
 }
 .nav-logo {
-  font-family: 'Playfair Display', serif;
-  font-size: 1.6rem;
-  font-weight: 700;
-  color: var(--white);
-  letter-spacing: 0.02em;
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
 }
-.nav-logo span { color: var(--violet-light); }
+.nav-logo-img {
+  height: 38px;
+  width: auto;
+  max-width: 160px;
+  object-fit: contain;
+  display: block;
+  filter: brightness(1);
+  transition: filter 0.3s, transform 0.3s;
+}
+.nav-logo:hover .nav-logo-img {
+  filter: brightness(1.15) drop-shadow(0 0 8px var(--violet-glow));
+  transform: scale(1.03);
+}
 .nav-links {
   display: flex;
   gap: 2.2rem;
@@ -411,13 +421,24 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   transform: translateY(-6px) scale(1.02);
   box-shadow: 0 20px 60px rgba(0,0,0,0.6), 0 0 40px var(--violet-glow);
 }
-.cat-card img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  transition: transform 0.6s var(--ease-expo);
+/* ─── MINI CAROUSEL (dentro de cat-card) ─────────── */
+.cat-mini-carousel {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
 }
-.cat-card:hover img { transform: scale(1.08); }
+.cat-mini-slide {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  opacity: 0;
+  transition: opacity 1.2s ease-in-out;
+}
+.cat-mini-slide.active { opacity: 1; }
+.cat-card:hover .cat-mini-carousel { transform: scale(1.05); }
+.cat-mini-carousel { transition: transform 0.6s var(--ease-expo); }
 .cat-card-overlay {
   position: absolute;
   inset: 0;
@@ -518,11 +539,24 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   box-shadow: 0 16px 48px rgba(0,0,0,0.5), 0 0 20px var(--violet-glow);
   border-color: rgba(139,92,246,0.25);
 }
+
+/* Contenedor imagen — sin estirar, crop centrado */
+.product-img-wrap {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  overflow: hidden;
+  background: var(--black-soft);
+}
 .product-img {
   width: 100%;
-  aspect-ratio: 1;
+  height: 100%;
   object-fit: cover;
+  object-position: center;
+  display: block;
+  transition: transform 0.5s var(--ease-expo);
 }
+.product-card:hover .product-img { transform: scale(1.06); }
+
 .product-info { padding: 1.1rem 1.2rem 1.4rem; }
 .product-name {
   font-weight: 600;
@@ -536,30 +570,31 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   line-height: 1.5;
   margin-bottom: 1rem;
 }
-.product-price {
-  font-size: 1rem;
-  font-weight: 700;
-  color: var(--violet-light);
-  margin-bottom: 1rem;
-}
-.product-btn {
+
+/* Botón WhatsApp por producto */
+.product-wa-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
   width: 100%;
-  padding: 0.6rem;
+  padding: 0.65rem;
   border-radius: 10px;
-  background: rgba(139,92,246,0.15);
-  border: 1px solid rgba(139,92,246,0.35);
-  color: var(--violet-light);
+  background: rgba(37,211,102,0.12);
+  border: 1px solid rgba(37,211,102,0.35);
+  color: #4ade80;
   font-size: 0.85rem;
   font-weight: 600;
   font-family: 'Outfit', sans-serif;
-  cursor: pointer;
-  transition: background 0.3s, color 0.3s, border-color 0.3s, box-shadow 0.3s;
+  text-decoration: none;
+  transition: background 0.3s, color 0.3s, border-color 0.3s, box-shadow 0.3s, transform 0.2s;
 }
-.product-btn:hover {
-  background: var(--violet);
-  border-color: var(--violet);
+.product-wa-btn:hover {
+  background: #25D366;
+  border-color: #25D366;
   color: var(--white);
-  box-shadow: 0 0 16px var(--violet-glow);
+  box-shadow: 0 0 18px rgba(37,211,102,0.45);
+  transform: translateY(-1px);
 }
 
 @keyframes cardIn {
