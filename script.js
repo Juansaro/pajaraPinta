@@ -324,22 +324,29 @@ function initModal() {
     updateZoom();
   });
   
-  // Lógica de arrastre (Pan)
-  imgWrap?.addEventListener('mousedown', (e) => {
+  // Lógica de arrastre (Pan) para Mouse y Touch (Mobile)
+  function startDrag(e) {
     if (modalCurrentZoom > 1) {
       isDragging = true;
-      startX = e.clientX - modalTranslateX;
-      startY = e.clientY - modalTranslateY;
-      imgWrap.style.cursor = 'grabbing';
+      const clientX = e.type.includes('touch') ? e.touches[0].clientX : e.clientX;
+      const clientY = e.type.includes('touch') ? e.touches[0].clientY : e.clientY;
+      
+      startX = clientX - modalTranslateX;
+      startY = clientY - modalTranslateY;
+      if(imgWrap) imgWrap.style.cursor = 'grabbing';
       modalImg.style.transition = 'none'; // Sin transición durante el arrastre
-      e.preventDefault();
+      
+      if(e.cancelable) e.preventDefault();
     }
-  });
-  
-  window.addEventListener('mousemove', (e) => {
+  }
+
+  function doDrag(e) {
     if (isDragging) {
-      modalTranslateX = e.clientX - startX;
-      modalTranslateY = e.clientY - startY;
+      const clientX = e.type.includes('touch') ? e.touches[0].clientX : e.clientX;
+      const clientY = e.type.includes('touch') ? e.touches[0].clientY : e.clientY;
+      
+      modalTranslateX = clientX - startX;
+      modalTranslateY = clientY - startY;
       
       // Limitar el desplazamiento a los bordes de la imagen escalada
       const maxPanX = (imgWrap.offsetWidth * modalCurrentZoom - imgWrap.offsetWidth) / 2;
@@ -349,16 +356,27 @@ function initModal() {
       modalTranslateY = Math.max(-maxPanY, Math.min(maxPanY, modalTranslateY));
       
       modalImg.style.transform = `translate(${modalTranslateX}px, ${modalTranslateY}px) scale(${modalCurrentZoom})`;
+      
+      if(e.cancelable) e.preventDefault();
     }
-  });
-  
-  window.addEventListener('mouseup', () => {
+  }
+
+  function endDrag() {
     if (isDragging) {
       isDragging = false;
       if(imgWrap) imgWrap.style.cursor = modalCurrentZoom > 1 ? 'grab' : 'default';
       modalImg.style.transition = 'opacity 0.6s, transform 0.4s cubic-bezier(0.16, 1, 0.3, 1)';
     }
-  });
+  }
+
+  imgWrap?.addEventListener('mousedown', startDrag);
+  imgWrap?.addEventListener('touchstart', startDrag, { passive: false });
+  
+  window.addEventListener('mousemove', doDrag);
+  window.addEventListener('touchmove', doDrag, { passive: false });
+  
+  window.addEventListener('mouseup', endDrag);
+  window.addEventListener('touchend', endDrag);
   
   function closeModal() {
     modal.classList.add('closing');
