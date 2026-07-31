@@ -18,14 +18,15 @@
   <!-- Favicon -->
   <link rel="icon" href="favicon.png" type="image/png" />
 
-  <!-- Preload critical images -->
-  <link rel="preload" as="image" href="images_migration/principal/img_principal_ceramica.jpeg" />
-  <link rel="preload" as="image" href="images_migration/principal/img_principal_matera.jpeg" />
-  <link rel="preload" as="image" href="images_migration/principal/img_principal_ropa.jpeg" />
-
-  <!-- Fonts -->
+  <!-- Google Fonts: preconnect + stylesheet en HTML (evita el @import bloqueante del CSS) -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" />
+
+  <!-- Preload primera imagen del hero (la más importante para LCP) -->
+  <link rel="preload" as="image" href="images_migration/principal/img_principal_ceramica.jpeg" fetchpriority="high" />
+  <link rel="preload" as="image" href="images_migration/principal/img_principal_matera.jpeg" />
+  <link rel="preload" as="image" href="images_migration/principal/img_principal_ropa.jpeg" />
 
   <link rel="stylesheet" href="styles.css" />
 </head>
@@ -36,7 +37,7 @@
   ═══════════════════════════════════════════════ -->
   <nav id="navbar" aria-label="Navegación principal">
     <a href="#hero" class="nav-logo" aria-label="Pajara Pinta - Inicio">
-      <img src="images_migration/branding/logo_principal.png" alt="Pajara Pinta" class="nav-logo-img" />
+      <img src="images_migration/branding/logo_principal.png" alt="Pajara Pinta" class="nav-logo-img" width="48" height="48" />
       <span class="nav-logo-text">la pajara pinta</span>
     </a>
     <ul class="nav-links" role="list">

@@ -68,8 +68,14 @@ const $$ = (sel, ctx = document) => [...ctx.querySelectorAll(sel)];
 /* ─── NAVBAR SCROLL ───────────────────────────────── */
 function initNavbar() {
   const nav = $('#navbar');
+  let rafPending = false;
   window.addEventListener('scroll', () => {
-    nav.classList.toggle('scrolled', window.scrollY > 60);
+    if (rafPending) return;
+    rafPending = true;
+    requestAnimationFrame(() => {
+      nav.classList.toggle('scrolled', window.scrollY > 60);
+      rafPending = false;
+    });
   }, { passive: true });
 }
 
