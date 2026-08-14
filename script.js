@@ -100,17 +100,8 @@ function initNavbar() {
   const nav = $('#navbar');
   const toggle = $('#nav-toggle');
   const menu = $('#nav-menu');
+  const catalog = $('#catalog');
   let rafPending = false;
-
-  window.addEventListener('scroll', () => {
-    if (rafPending) return;
-    rafPending = true;
-    requestAnimationFrame(() => {
-      nav.classList.toggle('scrolled', window.scrollY > 40);
-      rafPending = false;
-    });
-  }, { passive: true });
-  nav.classList.toggle('scrolled', window.scrollY > 40);
 
   function setMenu(open) {
     nav.classList.toggle('menu-open', open);
@@ -118,6 +109,28 @@ function initNavbar() {
     toggle.setAttribute('aria-expanded', String(open));
     toggle.setAttribute('aria-label', open ? 'Cerrar menú' : 'Abrir menú');
   }
+
+  function syncNavVisibility() {
+    if (!catalog) return;
+    const show = catalog.getBoundingClientRect().top <= 88;
+    nav.classList.toggle('is-visible', show);
+    if (menu) menu.inert = !show;
+    const actions = $('.nav-actions');
+    if (actions) actions.inert = !show;
+    if (!show && nav.classList.contains('menu-open')) {
+      setMenu(false);
+    }
+  }
+
+  window.addEventListener('scroll', () => {
+    if (rafPending) return;
+    rafPending = true;
+    requestAnimationFrame(() => {
+      syncNavVisibility();
+      rafPending = false;
+    });
+  }, { passive: true });
+  syncNavVisibility();
 
   toggle?.addEventListener('click', () => {
     setMenu(!nav.classList.contains('menu-open'));
@@ -139,6 +152,7 @@ function initNavbar() {
     if (window.innerWidth > 900 && nav.classList.contains('menu-open')) {
       setMenu(false);
     }
+    syncNavVisibility();
   });
 }
 
@@ -152,13 +166,13 @@ function initHero() {
 
   $('#scroll-down')?.addEventListener('click', () => {
     setCatalogFilter('all');
-    smoothScrollTo($('#catalog'), 20);
+    smoothScrollTo($('#catalog'), 0);
   });
 
   $$('[data-filter]').forEach(el => {
     el.addEventListener('click', () => {
       setCatalogFilter(el.dataset.filter);
-      smoothScrollTo($('#catalog'), 20);
+      smoothScrollTo($('#catalog'), 0);
     });
   });
 }
