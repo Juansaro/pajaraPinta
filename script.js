@@ -9,34 +9,32 @@ const WHATSAPP_MSG = encodeURIComponent(
 
 const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-const heroImages = [
-  {
-    webp: 'images_migration/principal/img_principal_ceramica.webp',
-    jpeg: 'images_migration/principal/img_principal_ceramica.jpeg',
-    alt: 'Cerámica pintada a mano de La Pajara Pinta',
-    width: 1286,
-    height: 1600,
-  },
-  {
-    webp: 'images_migration/principal/img_principal_matera.webp',
-    jpeg: 'images_migration/principal/img_principal_matera.jpeg',
-    alt: 'Matera pintada a mano de La Pajara Pinta',
-    width: 1396,
-    height: 1459,
-  },
-  {
-    webp: 'images_migration/principal/img_principal_ropa.webp',
-    jpeg: 'images_migration/principal/img_principal_ropa.jpeg',
-    alt: 'Ropa pintada a mano de La Pajara Pinta',
-    width: 1080,
-    height: 1318,
-  },
-];
+const CAT_LABELS = {
+  ceramica: 'Cerámica',
+  materas: 'Materas',
+  ropa: 'Ropa',
+};
 
 const DESCS = {
-  ceramica: 'Pieza de cerámica pintada a mano. Cada trazo es único; pregunta disponibilidad y medidas por WhatsApp.',
-  materas: 'Matera pintada a mano, lista para sembrar. No hay dos iguales.',
-  ropa: 'Prenda pintada a mano con diseño irrepetible. Pregunta talla y disponibilidad.',
+  ceramica: 'Pieza de cerámica pintada a mano. Cada trazo es único.',
+  materas: 'Matera pintada a mano, lista para sembrar.',
+  ropa: 'Prenda pintada a mano. Pregunta talla y disponibilidad.',
+};
+
+const SIZES = {
+  ceramica: { 1: [1600, 1004], 2: [1204, 1600] },
+  materas: {
+    1: [1526, 1600], 2: [1329, 1600], 3: [750, 1020], 4: [1200, 1600],
+    5: [756, 741], 6: [1426, 1484], 7: [962, 854], 8: [806, 854],
+    9: [1036, 989], 10: [859, 779], 11: [848, 853], 12: [706, 894],
+    13: [957, 1045], 14: [1200, 1382],
+  },
+  ropa: {
+    1: [1079, 1363], 2: [1080, 1340], 3: [1062, 1442], 4: [1079, 1007],
+    5: [1076, 1218], 6: [1080, 1247], 7: [770, 856], 8: [1080, 1324],
+    9: [1073, 1334], 10: [1080, 1060], 11: [1080, 1332], 12: [1075, 1233],
+    13: [1080, 1287], 14: [1080, 1390], 15: [1065, 1273], 16: [1080, 1352],
+  },
 };
 
 function productPaths(folder, file) {
@@ -48,67 +46,49 @@ function productPaths(folder, file) {
   };
 }
 
-const categories = [
-  {
-    id: 'ceramica',
-    name: 'Cerámica',
-    count: 2,
-    parentImgs: [
-      'images_migration/productos_ceramicos_personalizados/thumbs/img_padre_ceramica_personalizada_1.webp',
-      'images_migration/productos_ceramicos_personalizados/thumbs/img_padre_ceramica_personalizada_2.webp',
-    ],
-    products: [1, 2].map(n => ({
-      cat: 'ceramica',
-      name: `Cerámica Personalizada ${n}`,
-      desc: DESCS.ceramica,
-      ...productPaths(
-        'images_migration/productos_ceramicos_personalizados',
-        `img_hija_ceramica_personalizada_${n}`
-      ),
-    })),
-  },
-  {
-    id: 'materas',
-    name: 'Materas',
-    count: 14,
-    parentImgs: [
-      'images_migration/productos_materas_personalizados/thumbs/img_padre_matera_personalizada_1.webp',
-      'images_migration/productos_materas_personalizados/thumbs/img_padre_matera_personalizada_2.webp',
-    ],
-    products: Array.from({ length: 14 }, (_, i) => ({
-      cat: 'materas',
-      name: `Matera Personalizada ${i + 1}`,
-      desc: DESCS.materas,
-      ...productPaths(
-        'images_migration/productos_materas_personalizados',
-        `img_hija_matera_personalizada_${i + 1}`
-      ),
-    })),
-  },
-  {
-    id: 'ropa',
-    name: 'Ropa',
-    count: 16,
-    parentImgs: [
-      'images_migration/productos_ropa_personalizados/thumbs/img_padre_ropa_personalizada_1.webp',
-      'images_migration/productos_ropa_personalizados/thumbs/img_padre_ropa_personalizada_2.webp',
-    ],
-    products: Array.from({ length: 16 }, (_, i) => ({
-      cat: 'ropa',
-      name: `Prenda Personalizada ${i + 1}`,
-      desc: DESCS.ropa,
-      ...productPaths(
-        'images_migration/productos_ropa_personalizados',
-        `img_hija_ropa_personalizada_${i + 1}`
-      ),
-    })),
-  },
-];
+function makeProducts(cat, folder, prefix, count) {
+  return Array.from({ length: count }, (_, i) => {
+    const n = i + 1;
+    const [w, h] = SIZES[cat][n];
+    const names = {
+      ceramica: `Cerámica Personalizada ${n}`,
+      materas: `Matera Personalizada ${n}`,
+      ropa: `Prenda Personalizada ${n}`,
+    };
+    return {
+      id: `${cat}-${n}`,
+      cat,
+      name: names[cat],
+      desc: DESCS[cat],
+      width: w,
+      height: h,
+      ...productPaths(folder, `${prefix}${n}`),
+    };
+  });
+}
 
-const allProducts = categories.flatMap(c => c.products);
+const allProducts = [
+  ...makeProducts('ceramica', 'images_migration/productos_ceramicos_personalizados', 'img_hija_ceramica_personalizada_', 2),
+  ...makeProducts('materas', 'images_migration/productos_materas_personalizados', 'img_hija_matera_personalizada_', 14),
+  ...makeProducts('ropa', 'images_migration/productos_ropa_personalizados', 'img_hija_ropa_personalizada_', 16),
+];
 
 const $ = (sel, ctx = document) => ctx.querySelector(sel);
 const $$ = (sel, ctx = document) => [...ctx.querySelectorAll(sel)];
+
+let activeFilter = 'all';
+let lightboxIndex = 0;
+let setCatalogFilter = () => {};
+
+function visibleProducts() {
+  return activeFilter === 'all'
+    ? allProducts
+    : allProducts.filter(p => p.cat === activeFilter);
+}
+
+function pieceLabel(n) {
+  return n === 1 ? '1 pieza' : `${n} piezas`;
+}
 
 function smoothScrollTo(el, offset = 80) {
   const top = el.getBoundingClientRect().top + window.scrollY - offset;
@@ -126,11 +106,11 @@ function initNavbar() {
     if (rafPending) return;
     rafPending = true;
     requestAnimationFrame(() => {
-      nav.classList.toggle('scrolled', window.scrollY > 60);
+      nav.classList.toggle('scrolled', window.scrollY > 40);
       rafPending = false;
     });
   }, { passive: true });
-  nav.classList.toggle('scrolled', window.scrollY > 60);
+  nav.classList.toggle('scrolled', window.scrollY > 40);
 
   function setMenu(open) {
     nav.classList.toggle('menu-open', open);
@@ -162,100 +142,33 @@ function initNavbar() {
   });
 }
 
-/* ─── HERO CAROUSEL ───────────────────────────────── */
-function initHeroCarousel() {
-  const container = $('.hero-images');
-  const indicators = $$('.indicator');
-  let current = 0;
-  let timer;
-  let inView = true;
-
-  const heroContent = $('.hero-content');
-  heroImages.slice(1).forEach(img => {
-    const slide = document.createElement('div');
-    slide.className = 'hero-slide';
-    slide.innerHTML = `
-      <picture>
-        <source srcset="${img.webp}" type="image/webp" />
-        <img src="${img.jpeg}" alt="${img.alt}" width="${img.width}" height="${img.height}" loading="lazy" />
-      </picture>
-    `;
-    container.insertBefore(slide, heroContent);
+/* ─── HERO ────────────────────────────────────────── */
+function initHero() {
+  const counts = { ceramica: 0, materas: 0, ropa: 0 };
+  allProducts.forEach(p => { counts[p.cat] += 1; });
+  $$('[data-count-for]').forEach(el => {
+    el.textContent = pieceLabel(counts[el.dataset.countFor] || 0);
   });
-
-  const slides = $$('.hero-slide');
-
-  function goTo(idx) {
-    slides[current].classList.remove('active');
-    indicators[current]?.classList.remove('active');
-    indicators[current]?.setAttribute('aria-selected', 'false');
-    current = (idx + slides.length) % slides.length;
-    slides[current].classList.add('active');
-    indicators[current]?.classList.add('active');
-    indicators[current]?.setAttribute('aria-selected', 'true');
-  }
-
-  function startTimer() {
-    if (prefersReducedMotion) return;
-    clearInterval(timer);
-    timer = setInterval(() => {
-      if (inView) goTo(current + 1);
-    }, 5000);
-  }
-
-  indicators.forEach((btn, i) => {
-    btn.addEventListener('click', () => {
-      goTo(i);
-      startTimer();
-    });
-  });
-
-  const hero = $('#hero');
-  new IntersectionObserver(
-    ([entry]) => { inView = entry.isIntersecting; },
-    { threshold: 0.2 }
-  ).observe(hero);
-
-  startTimer();
 
   $('#scroll-down')?.addEventListener('click', () => {
+    setCatalogFilter('all');
     smoothScrollTo($('#catalog'), 20);
   });
-}
 
-/* ─── MINI CAROUSEL ───────────────────────────────── */
-function startMiniCarousel(card) {
-  const slides = $$('.cat-mini-slide', card);
-  if (slides.length < 2 || prefersReducedMotion) return;
-  let cur = 0;
-  let timer;
-
-  function tick() {
-    slides[cur].classList.remove('active');
-    cur = (cur + 1) % slides.length;
-    slides[cur].classList.add('active');
-  }
-
-  const io = new IntersectionObserver(([entry]) => {
-    if (entry.isIntersecting) {
-      if (!timer) timer = setInterval(tick, 3200);
-    } else if (timer) {
-      clearInterval(timer);
-      timer = null;
-    }
-  }, { threshold: 0.15 });
-
-  io.observe(card);
+  $$('[data-filter]').forEach(el => {
+    el.addEventListener('click', () => {
+      setCatalogFilter(el.dataset.filter);
+      smoothScrollTo($('#catalog'), 20);
+    });
+  });
 }
 
 /* ─── CATALOG ─────────────────────────────────────── */
 function initCatalog() {
-  const catGrid = $('#categories-grid');
   const prodGrid = $('#products-grid');
   const prodTitle = $('#products-title');
   const prodCount = $('#products-count');
   const chips = $$('.filter-chip');
-  let activeCat = 'all';
 
   const labels = {
     all: 'Todas las piezas',
@@ -264,54 +177,24 @@ function initCatalog() {
     ropa: 'Ropa',
   };
 
-  categories.forEach(cat => {
-    const card = document.createElement('button');
-    card.type = 'button';
-    card.className = 'cat-card';
-    card.dataset.id = cat.id;
-    card.setAttribute('role', 'listitem');
-    card.setAttribute('aria-label', `Ver ${cat.name}, ${cat.count} piezas`);
-
-    const slidesHTML = cat.parentImgs.map((img, i) =>
-      `<div class="cat-mini-slide${i === 0 ? ' active' : ''}" style="background-image:url('${img}')"></div>`
-    ).join('');
-
-    card.innerHTML = `
-      <div class="cat-mini-carousel">${slidesHTML}</div>
-      <div class="cat-card-overlay">
-        <span class="cat-card-name">${cat.name}</span>
-        <span class="cat-card-count">${cat.count} piezas</span>
-      </div>
-      <div class="cat-card-arrow" aria-hidden="true">
-        <svg width="16" height="16" fill="none" stroke="#fff" stroke-width="2.5" viewBox="0 0 24 24">
-          <path d="M5 12h14M12 5l7 7-7 7"/>
-        </svg>
-      </div>
-    `;
-
-    card.addEventListener('click', () => {
-      setFilter(cat.id, true);
-    });
-    catGrid.appendChild(card);
-    startMiniCarousel(card);
-  });
-
-  allProducts.forEach((p, i) => {
+  allProducts.forEach(p => {
     const card = document.createElement('article');
     card.className = 'product-card';
     card.dataset.cat = p.cat;
-    card.style.animationDelay = `${Math.min(i, 12) * 40}ms`;
+    card.dataset.id = p.id;
     card.innerHTML = `
       <div class="product-img-wrap">
         <picture>
           <source type="image/webp" srcset="${p.thumbWebp}" />
-          <img class="product-img" src="${p.thumb}" alt="${p.name}" loading="lazy" width="600" height="600" />
+          <img class="product-img" src="${p.thumb}" alt="${p.name}" loading="lazy" width="${p.width}" height="${p.height}" />
         </picture>
+        <span class="product-badge">${CAT_LABELS[p.cat]}</span>
+        <div class="product-overlay">
+          <span class="product-overlay-cta">Ver pieza</span>
+        </div>
       </div>
-      <div class="product-info">
+      <div class="product-meta">
         <p class="product-name">${p.name}</p>
-        <p class="product-desc">${p.desc}</p>
-        <span class="product-open-btn">Ver pieza</span>
       </div>
     `;
     card.tabIndex = 0;
@@ -327,8 +210,8 @@ function initCatalog() {
     prodGrid.appendChild(card);
   });
 
-  function setFilter(catId, scroll) {
-    activeCat = catId;
+  function setFilter(catId) {
+    activeFilter = catId;
     chips.forEach(chip => {
       const on = chip.dataset.cat === catId;
       chip.classList.toggle('active', on);
@@ -340,34 +223,31 @@ function initCatalog() {
     cards.forEach(card => {
       const show = catId === 'all' || card.dataset.cat === catId;
       card.classList.toggle('is-hidden', !show);
-      if (show) {
-        visible += 1;
-        card.classList.remove('animate-in');
-        void card.offsetWidth;
-        card.classList.add('animate-in');
-      }
+      if (show) visible += 1;
     });
 
     prodTitle.textContent = labels[catId] || 'Colección';
-    prodCount.textContent = visible === 1 ? '1 pieza' : `${visible} piezas`;
-
-    if (scroll) smoothScrollTo($('#filter-bar'), 8);
+    prodCount.textContent = pieceLabel(visible);
   }
 
+  setCatalogFilter = setFilter;
+
   chips.forEach(chip => {
-    chip.addEventListener('click', () => setFilter(chip.dataset.cat, false));
+    chip.addEventListener('click', () => setFilter(chip.dataset.cat));
   });
 
-  setFilter('all', false);
+  setFilter('all');
 }
 
 /* ─── WHATSAPP ────────────────────────────────────── */
 function initWhatsApp() {
   const float = $('#wa-float');
   const mainWa = $('#wa-main-btn');
+  const heroWa = $('#hero-wa-btn');
   const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${WHATSAPP_MSG}`;
   if (float) float.href = url;
   if (mainWa) mainWa.href = url;
+  if (heroWa) heroWa.href = url;
 
   const contact = $('#contact');
   if (!float || !contact) return;
@@ -378,25 +258,23 @@ function initWhatsApp() {
   ).observe(contact);
 }
 
-/* ─── MODAL ───────────────────────────────────────── */
+/* ─── LIGHTBOX ────────────────────────────────────── */
 let modalCurrentZoom = 1;
 let modalTranslateX = 0;
 let modalTranslateY = 0;
 let lastFocus = null;
 
 function getFocusable(modal) {
-  return $$('a[href], button:not([disabled]), textarea, input, select, [tabindex]:not([tabindex="-1"])', modal)
-    .filter(el => !el.hasAttribute('disabled') && el.offsetParent !== null);
+  return $$('a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])', modal)
+    .filter(el => !el.hasAttribute('disabled'));
 }
 
-function openModal(product) {
-  const modal = $('#product-modal');
-  lastFocus = document.activeElement;
-
+function fillLightbox(product) {
   $('#modal-img-webp').srcset = product.imgWebp;
   const modalImg = $('#modal-img');
   modalImg.src = product.img;
   modalImg.alt = product.name;
+  $('#modal-cat').textContent = CAT_LABELS[product.cat] || '';
   $('#modal-title').textContent = product.name;
   $('#modal-desc').textContent = product.desc;
 
@@ -409,6 +287,14 @@ function openModal(product) {
   modalTranslateX = 0;
   modalTranslateY = 0;
   modalImg.style.transform = 'translate(0px, 0px) scale(1)';
+}
+
+function openModal(product) {
+  const modal = $('#product-modal');
+  lastFocus = document.activeElement;
+  const list = visibleProducts();
+  lightboxIndex = Math.max(0, list.findIndex(p => p.id === product.id));
+  fillLightbox(list[lightboxIndex]);
 
   modal.classList.remove('closing');
   modal.setAttribute('aria-hidden', 'false');
@@ -419,6 +305,13 @@ function openModal(product) {
     modal.classList.add('open');
     $('#modal-close')?.focus();
   });
+}
+
+function stepLightbox(dir) {
+  const list = visibleProducts();
+  if (!list.length) return;
+  lightboxIndex = (lightboxIndex + dir + list.length) % list.length;
+  fillLightbox(list[lightboxIndex]);
 }
 
 function initModal() {
@@ -518,12 +411,30 @@ function initModal() {
 
   closeBtn?.addEventListener('click', closeModal);
   overlay?.addEventListener('click', closeModal);
+  $('#modal-prev')?.addEventListener('click', e => {
+    e.stopPropagation();
+    stepLightbox(-1);
+  });
+  $('#modal-next')?.addEventListener('click', e => {
+    e.stopPropagation();
+    stepLightbox(1);
+  });
 
   document.addEventListener('keydown', e => {
     if (!modal.classList.contains('open')) return;
     if (e.key === 'Escape') {
       e.preventDefault();
       closeModal();
+      return;
+    }
+    if (e.key === 'ArrowLeft') {
+      e.preventDefault();
+      stepLightbox(-1);
+      return;
+    }
+    if (e.key === 'ArrowRight') {
+      e.preventDefault();
+      stepLightbox(1);
       return;
     }
     if (e.key !== 'Tab') return;
@@ -563,8 +474,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const modal = $('#product-modal');
   if (modal) modal.inert = true;
   initNavbar();
-  initHeroCarousel();
   initCatalog();
+  initHero();
   initModal();
   initWhatsApp();
   initScrollReveal();

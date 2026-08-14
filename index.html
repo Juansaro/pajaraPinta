@@ -20,7 +20,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" />
 
-  <link rel="preload" as="image" href="images_migration/principal/img_principal_ceramica.webp" type="image/webp" fetchpriority="high" />
+  <link rel="preload" as="image" href="images_migration/principal/img_principal_ropa.webp" type="image/webp" fetchpriority="high" />
 
   <link rel="stylesheet" href="styles.css" />
 </head>
@@ -37,10 +37,8 @@
       <span class="nav-logo-text">la pajara pinta</span>
     </a>
     <ul id="nav-menu" class="nav-links" role="list">
-      <li><a href="#hero">Inicio</a></li>
-      <li><a href="#process">Oficio</a></li>
       <li><a href="#catalog">Catálogo</a></li>
-      <li><a href="#contact">Contacto</a></li>
+      <li><a href="#process">Oficio</a></li>
       <li class="nav-cta-item">
         <a href="#contact" class="nav-cta">Contáctame</a>
       </li>
@@ -56,100 +54,77 @@
   </nav>
 
   <section id="hero" aria-label="Portada principal">
-    <div class="hero-images">
-      <div class="hero-slide active">
-        <picture>
-          <source srcset="images_migration/principal/img_principal_ceramica.webp" type="image/webp" />
-          <img
-            src="images_migration/principal/img_principal_ceramica.jpeg"
-            alt="Cerámica pintada a mano de La Pajara Pinta"
-            width="1286"
-            height="1600"
-            fetchpriority="high"
-          />
-        </picture>
-      </div>
-
-      <div class="hero-content">
+    <div class="hero-featured">
+      <picture>
+        <source srcset="images_migration/principal/img_principal_ropa.webp" type="image/webp" />
+        <img
+          src="images_migration/principal/img_principal_ropa.jpeg"
+          alt="Chaqueta pintada a mano de La Pajara Pinta"
+          width="1080"
+          height="1318"
+          fetchpriority="high"
+        />
+      </picture>
+      <div class="hero-copy">
         <span class="hero-tag">Taller de arte en Colombia</span>
         <h1 class="hero-title">Arte que<br><em>usas &amp; siembras</em></h1>
         <p class="hero-sub">
-          Ropa y materas pintadas a mano. Cada pieza es única:
-          se lleva, se siembra y se consulta por WhatsApp.
+          Chaquetas, materas y cerámica pintadas a mano. Cada pieza es única y se consulta por WhatsApp.
         </p>
-        <div class="hero-scroll-btn">
-          <button type="button" id="scroll-down" aria-label="Bajar al catálogo">
-            <div class="scroll-icon">
-              <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M12 5v14M5 12l7 7 7-7"/>
-              </svg>
-            </div>
-            Ver catálogo
-          </button>
+        <div class="hero-actions">
+          <button type="button" id="scroll-down" class="hero-cta">Ver catálogo</button>
+          <a id="hero-wa-btn" href="#" target="_blank" rel="noopener noreferrer" class="hero-cta-ghost">WhatsApp</a>
         </div>
-      </div>
-
-      <div class="hero-indicators" aria-label="Indicadores del carrusel" role="tablist">
-        <button type="button" class="indicator active" aria-label="Foto 1: cerámica" role="tab" aria-selected="true"></button>
-        <button type="button" class="indicator" aria-label="Foto 2: materas" role="tab" aria-selected="false"></button>
-        <button type="button" class="indicator" aria-label="Foto 3: ropa" role="tab" aria-selected="false"></button>
+        <button type="button" class="hero-featured-cat" data-filter="ropa">
+          Ropa <span data-count-for="ropa">16 piezas</span>
+        </button>
       </div>
     </div>
 
-    <aside class="hero-side" aria-hidden="true">
-      <span class="side-label">Pajara Pinta &nbsp;·&nbsp; 2026</span>
-    </aside>
-  </section>
+    <button type="button" class="hero-tile" data-filter="materas" aria-label="Ver materas en el catálogo">
+      <picture>
+        <source srcset="images_migration/principal/img_principal_matera.webp" type="image/webp" />
+        <img
+          src="images_migration/principal/img_principal_matera.jpeg"
+          alt="Matera pintada a mano de La Pajara Pinta"
+          width="1396"
+          height="1459"
+        />
+      </picture>
+      <span class="hero-tile-label">
+        Materas
+        <span class="hero-tile-count" data-count-for="materas">14 piezas</span>
+      </span>
+    </button>
 
-  <section id="process" aria-labelledby="process-heading">
-    <div class="section-header reveal">
-      <p class="section-eyebrow">El oficio</p>
-      <h2 id="process-heading" class="section-title">Cómo nace<br><em>una pieza</em></h2>
-      <div class="section-divider"></div>
-    </div>
-    <div class="process-steps">
-      <article class="process-step reveal">
-        <div class="process-icon" aria-hidden="true">
-          <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
-            <path d="M4 7h16M4 12h10M4 17h7"/>
-          </svg>
-        </div>
-        <span class="process-num">Paso 01</span>
-        <h3>Eliges la base</h3>
-        <p>Cerámica, matera o prenda. Me escribes por WhatsApp con la pieza que te llamó la atención.</p>
-      </article>
-      <article class="process-step reveal">
-        <div class="process-icon" aria-hidden="true">
-          <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
-            <path d="M3 21l3.5-1.5L20 6a2.1 2.1 0 10-3-3L3.5 16.5 3 21z"/>
-          </svg>
-        </div>
-        <span class="process-num">Paso 02</span>
-        <h3>Se pinta a mano</h3>
-        <p>Cada trazo se hace a pincel. No hay dos iguales: el diseño nace en el taller, no en serie.</p>
-      </article>
-      <article class="process-step reveal">
-        <div class="process-icon" aria-hidden="true">
-          <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
-            <rect x="3" y="7" width="18" height="13" rx="2"/>
-            <path d="M8 7V5a4 4 0 018 0v2"/>
-          </svg>
-        </div>
-        <span class="process-num">Paso 03</span>
-        <h3>Te llega a casa</h3>
-        <p>Envíos a todo el país. Confirmamos medidas, disponibilidad y pago antes de despachar.</p>
-      </article>
-    </div>
+    <button type="button" class="hero-tile" data-filter="ceramica" aria-label="Ver cerámica en el catálogo">
+      <picture>
+        <source srcset="images_migration/principal/img_principal_ceramica.webp" type="image/webp" />
+        <img
+          src="images_migration/principal/img_principal_ceramica.jpeg"
+          alt="Cerámica pintada a mano de La Pajara Pinta"
+          width="1286"
+          height="1600"
+        />
+      </picture>
+      <span class="hero-tile-label">
+        Cerámica
+        <span class="hero-tile-count" data-count-for="ceramica">2 piezas</span>
+      </span>
+    </button>
   </section>
 
   <section id="catalog" aria-labelledby="catalog-heading">
-    <div class="section-header reveal">
-      <p class="section-eyebrow">El taller abierto</p>
-      <h2 id="catalog-heading" class="section-title">Piezas que<br><em>esperan dueño</em></h2>
-      <div class="section-divider"></div>
+    <div class="catalog-intro reveal">
+      <div class="section-header">
+        <p class="section-eyebrow">Sala</p>
+        <h2 id="catalog-heading" class="section-title">Piezas que<br><em>esperan dueño</em></h2>
+        <div class="section-divider"></div>
+      </div>
+      <p class="catalog-lead">
+        Treinta y dos obras listas para vestir o sembrar. Elige una y te confirmo disponibilidad por WhatsApp.
+      </p>
     </div>
-
-    <div id="categories-grid" class="categories-grid reveal" role="list"></div>
 
     <div class="filter-bar" id="filter-bar">
       <div class="filter-chips" role="tablist" aria-label="Filtrar catálogo">
@@ -169,75 +144,101 @@
     </div>
   </section>
 
+  <section id="process" aria-labelledby="process-heading">
+    <div class="section-header reveal">
+      <p class="section-eyebrow">El oficio</p>
+      <h2 id="process-heading" class="section-title">Cómo nace<br><em>una pieza</em></h2>
+      <div class="section-divider"></div>
+    </div>
+    <div class="process-steps">
+      <article class="process-step reveal">
+        <div class="process-step-img">
+          <picture>
+            <source srcset="images_migration/principal/img_principal_ceramica.webp" type="image/webp" />
+            <img src="images_migration/principal/img_principal_ceramica.jpeg" alt="Base de cerámica lista para pintar" width="1286" height="1600" loading="lazy" />
+          </picture>
+          <span class="process-num">01</span>
+        </div>
+        <h3>Eliges la base</h3>
+        <p>Cerámica, matera o prenda. Me escribes por WhatsApp con la pieza que te llamó la atención.</p>
+      </article>
+      <article class="process-step reveal">
+        <div class="process-step-img">
+          <picture>
+            <source srcset="images_migration/principal/img_principal_ropa.webp" type="image/webp" />
+            <img src="images_migration/principal/img_principal_ropa.jpeg" alt="Chaqueta pintada a mano en el taller" width="1080" height="1318" loading="lazy" />
+          </picture>
+          <span class="process-num">02</span>
+        </div>
+        <h3>Se pinta a mano</h3>
+        <p>Cada trazo se hace a pincel. No hay dos iguales: el diseño nace en el taller, no en serie.</p>
+      </article>
+      <article class="process-step reveal">
+        <div class="process-step-img">
+          <picture>
+            <source srcset="images_migration/principal/img_principal_matera.webp" type="image/webp" />
+            <img src="images_migration/principal/img_principal_matera.jpeg" alt="Matera pintada lista para enviar" width="1396" height="1459" loading="lazy" />
+          </picture>
+          <span class="process-num">03</span>
+        </div>
+        <h3>Te llega a casa</h3>
+        <p>Envíos a todo el país. Confirmamos medidas, disponibilidad y pago antes de despachar.</p>
+      </article>
+    </div>
+  </section>
+
   <section id="contact" aria-labelledby="contact-heading">
-    <div class="contact-inner">
-      <div class="reveal">
+    <div class="contact-layout">
+      <div class="contact-copy reveal">
         <p class="section-eyebrow">Hablemos</p>
         <h2 id="contact-heading" class="section-title">Escríbeme para ver<br><em>disponibilidad y medidas</em></h2>
         <div class="section-divider"></div>
+        <p class="contact-lead">
+          Cada pieza se vende una sola vez. Te respondo por WhatsApp con fotos de detalle,
+          talla o tamaño, y cómo pagarla.
+        </p>
       </div>
-      <p class="contact-lead reveal">
-        Cada pieza se vende una sola vez. Te respondo por WhatsApp con fotos de detalle,
-        talla o tamaño, y cómo pagarla.
-      </p>
 
-      <div class="reveal">
+      <div class="contact-panel reveal">
         <a id="wa-main-btn" href="#" target="_blank" rel="noopener noreferrer" class="contact-whatsapp" aria-label="Contactar por WhatsApp">
           <svg width="26" height="26" viewBox="0 0 24 24" fill="#fff" aria-hidden="true">
             <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.886 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
           </svg>
           Escríbeme por WhatsApp
         </a>
-      </div>
 
-      <div class="contact-or reveal">o encuéntrame en</div>
+        <ul class="contact-facts">
+          <li>
+            <span>Taller</span>
+            Colombia · respuesta en horario de taller
+          </li>
+          <li>
+            <span>Envíos</span>
+            A todo el país, al confirmar talla y pago
+          </li>
+          <li>
+            <span>Pagos</span>
+            Nequi · Daviplata · Transferencia
+          </li>
+        </ul>
 
-      <div class="social-links reveal" role="list">
-        <a href="https://www.instagram.com/lapajarapinta10?igsh=MWxkeHJ5Z3VhdTRzYQ==" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Instagram de Pajara Pinta">
-          <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24" aria-hidden="true">
-            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
-            <path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/>
-            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
-          </svg>
-          Instagram
-        </a>
-        <a href="https://www.facebook.com/share/1BAJZecUnJ/" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Facebook de Pajara Pinta">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-            <path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/>
-          </svg>
-          Facebook
-        </a>
-      </div>
+        <p class="contact-or">o encuéntrame en</p>
 
-      <div class="contact-cards reveal">
-        <div class="contact-card">
-          <div class="contact-card-icon">
-            <svg width="20" height="20" fill="none" stroke="#fff" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/>
-              <circle cx="12" cy="10" r="3"/>
+        <div class="social-links" role="list">
+          <a href="https://www.instagram.com/lapajarapinta10?igsh=MWxkeHJ5Z3VhdTRzYQ==" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Instagram de Pajara Pinta">
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24" aria-hidden="true">
+              <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+              <path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37z"/>
+              <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
             </svg>
-          </div>
-          <h4>Ubicación</h4>
-          <p>Colombia<br>Envíos a todo el país</p>
-        </div>
-        <div class="contact-card">
-          <div class="contact-card-icon">
-            <svg width="20" height="20" fill="none" stroke="#fff" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
-              <circle cx="12" cy="12" r="10"/>
-              <polyline points="12 6 12 12 16 14"/>
+            Instagram
+          </a>
+          <a href="https://www.facebook.com/share/1BAJZecUnJ/" target="_blank" rel="noopener noreferrer" class="social-link" aria-label="Facebook de Pajara Pinta">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/>
             </svg>
-          </div>
-          <h4>Tiempo de respuesta</h4>
-          <p>Suelo responder en menos<br>de dos horas, en horario de taller</p>
-        </div>
-        <div class="contact-card">
-          <div class="contact-card-icon">
-            <svg width="20" height="20" fill="none" stroke="#fff" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-            </svg>
-          </div>
-          <h4>Pago</h4>
-          <p>Nequi · Daviplata<br>Transferencia bancaria</p>
+            Facebook
+          </a>
         </div>
       </div>
     </div>
@@ -245,7 +246,8 @@
 
   <footer>
     <div class="footer-brand">Pajara<span>.</span>Pinta</div>
-    <p class="footer-copy">© 2026 La Pajara Pinta · Pintado a mano en Colombia</p>
+    <p class="footer-meta">Colombia · Envíos a todo el país · Respuesta en horario de taller</p>
+    <p class="footer-copy">Nequi · Daviplata · Transferencia · © 2026</p>
   </footer>
 
   <a id="wa-float" href="#" target="_blank" rel="noopener noreferrer"
@@ -265,6 +267,12 @@
       </button>
       <div class="modal-body">
         <div class="modal-img-wrap" id="modal-img-wrap">
+          <button type="button" id="modal-prev" class="modal-nav modal-prev" aria-label="Pieza anterior">
+            <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 19l-7-7 7-7"/></svg>
+          </button>
+          <button type="button" id="modal-next" class="modal-nav modal-next" aria-label="Pieza siguiente">
+            <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
+          </button>
           <picture>
             <source id="modal-img-webp" type="image/webp" srcset="" />
             <img id="modal-img" class="modal-img" src="" alt="" />
@@ -279,13 +287,17 @@
           </div>
         </div>
         <div class="modal-text">
-          <h3 id="modal-title"></h3>
-          <p id="modal-desc"></p>
+          <div class="modal-ficha">
+            <p id="modal-cat" class="modal-cat"></p>
+            <p class="modal-unique">Pieza única · se vende una sola vez</p>
+            <h3 id="modal-title"></h3>
+            <p id="modal-desc"></p>
+          </div>
           <a id="modal-wa-btn" href="#" target="_blank" rel="noopener noreferrer" class="product-wa-btn">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="#fff" aria-hidden="true">
               <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.886 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
             </svg>
-            Consultar por WhatsApp
+            ¿Sigue disponible? Escríbeme
           </a>
         </div>
       </div>
