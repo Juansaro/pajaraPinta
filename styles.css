@@ -117,17 +117,19 @@ button { font-family: inherit; cursor: pointer; border: none; background: none; 
   font-weight: 600;
   letter-spacing: -0.01em;
   white-space: nowrap;
-  text-shadow: 0 1px 14px rgba(14, 12, 10, 0.45);
-  transition: color 0.25s, text-shadow 0.25s;
+  opacity: 0;
+  max-width: 0;
+  overflow: hidden;
+  visibility: hidden;
+  transition: opacity 0.35s var(--ease-out), max-width 0.45s var(--ease-expo), visibility 0.35s;
 }
 #navbar.is-visible .nav-logo-text,
 #navbar.menu-open .nav-logo-text {
-  text-shadow: none;
+  opacity: 1;
+  max-width: 16rem;
+  visibility: visible;
 }
 .nav-logo:hover .nav-logo-text { color: var(--clay); }
-#navbar:not(.is-visible):not(.menu-open) .nav-logo:hover .nav-logo-text {
-  color: #E8A07A;
-}
 
 .nav-links {
   display: flex;
@@ -1135,7 +1137,6 @@ footer {
     align-items: center;
     text-align: center;
   }
-  #navbar.is-visible .nav-logo-text { display: none; }
   .hero-tile { min-height: 160px; }
   #hero { grid-template-rows: minmax(68vh, auto) 170px; }
 }
